@@ -3,6 +3,8 @@ import logo from '../logo.png';
 import './App.css';
 import Web3 from 'web3';
 import Navbar from './Navbar'
+import Main from './Main'
+import MovieFunder from '../abis/MovieFunder.json'
 
 class App extends Component {
 
@@ -28,19 +30,41 @@ class App extends Component {
     const web3 = window.web3
     const accounts = await web3.eth.getAccounts()
     this.setState({account:accounts[0]})
-    const ethBalance = await web3.eth.getBalance(this.state.account)
+    let ethBalance = await web3.eth.getBalance(this.state.account)
+    ethBalance = web3.utils.fromWei(ethBalance, 'Ether')
     this.setState({ethBalance})
+
+    //load smart contract
+    const networkId = await web3.eth.net.getId()
+    const movieFunderData = MovieFunder.networks[networkId]
+    if (movieFunderData){
+      const movieFunder = new web3.eth.Contract(MovieFunder.abi,movieFunderData.address)
+      this.setState({movieFunder})
+    }else{
+      window.alert("Contract not deployed to the detected network")
+    }
+    this.setState({loading:false})
   }
+
 
   constructor(props) {
     super(props)
     this.state = {
       account:'',
-      ethBalance:'0'
+      movieFunder:{},
+      ethBalance:'0',
+      loading:true
     }
   }
 
   render() {
+    let content
+    if(this.state.loading){
+      content=<p id="loader" className="text-center">Loading...</p>
+    }else{
+      content=<Main ethBalance={this.state.ethBalance}/>
+    }
+
     return (
       <div>
         <Navbar account={this.state.account} />
@@ -56,6 +80,7 @@ class App extends Component {
                   <img src={logo} className="App-logo" alt="logo" />
                 </a>
                 <p></p>
+                {content}
                 <a
                   className="App-link"
                   href="https://www.linkedin.com/in/mcmuralishclint"
@@ -64,6 +89,7 @@ class App extends Component {
                 >
                   Subscribe to our service
                 </a>
+                
               </div>
             </main>
           </div>
