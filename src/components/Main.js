@@ -5,7 +5,7 @@ class Main extends Component {
   render() {
     return (
       <div id="content">
-        <p>Welcome your balance is {this.props.ethBalance} ether</p>
+        <p>Welcome! Your balance is {this.props.ethBalance} ether</p>
       </div>
     );
   }

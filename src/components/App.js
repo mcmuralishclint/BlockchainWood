@@ -53,11 +53,8 @@ class App extends Component {
           movies: [...this.state.movies, movie]
         })
       }
-        console.log(movie)
       }
 
-
-      console.log(await movieFunder.methods.movieCount().call())
       const admin = await movieFunder.methods.admin().call()
       if(admin===this.state.account){
         this.setState({admin:true})
@@ -96,7 +93,6 @@ class App extends Component {
     }
 
   createMovie(title,description,requiredAmount) {
-        console.log(title)
         this.setState({ loading: true })
         this.state.movieFunder.methods.createMovie(title,description,requiredAmount).send({ from: this.state.account })
         .once('receipt', (receipt) => {
