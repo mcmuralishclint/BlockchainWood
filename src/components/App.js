@@ -55,6 +55,7 @@ class App extends Component {
       this.setState({ movieCount })
       for (var i = 0; i <= movieCount; i++) {
         const movie = await movieFunder.methods.movies(i).call()
+        console.log(movie.movieHash)
         if(movie.title.length>0 && movie.active && this.state.account!=movie.producer){
         this.setState({
           movies: [...this.state.movies, movie]
@@ -80,7 +81,6 @@ class App extends Component {
   }
 
    captureFile = event => {
-
     event.preventDefault()
     const file = event.target.files[0]
     const reader = new window.FileReader()

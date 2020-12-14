@@ -22,6 +22,10 @@ class AddMovie extends Component {
 
                     this.props.createMovie(this.title.value,this.description.value,window.web3.utils.toWei(this.requiredAmount.value,'Ether'))
                   }}>
+
+                    <input type='file' accept=".jpg, .jpeg, .png, .bmp, .gif" onChange={this.props.captureFile} />
+                    <p></p>
+
                     <Form.Group controlId="title">
                       <Form.Control ref={(input) => this.title = input} type="text" placeholder="Title of the movie" />
                     </Form.Group>
@@ -29,11 +33,6 @@ class AddMovie extends Component {
                     <Form.Group controlId="description">
                       <Form.Control ref={(input) => this.description = input} type="text" placeholder="Description of the movie" />
                     </Form.Group>
-
-                    <input type='file' accept=".jpg, .jpeg, .png, .bmp, .gif" onChange={this.props.captureFile} />
-                  <div className="form-group">
-                    <br></br>
-                  </div>
 
                     <Form.Group controlId="requiredAmount">
                       <Form.Control ref={(input) => this.requiredAmount = input} type="text" placeholder="Required amount for the movie" />
