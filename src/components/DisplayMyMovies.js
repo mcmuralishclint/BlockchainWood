@@ -12,7 +12,7 @@ class DisplayMyMovies extends Component {
               <div className="content mr-auto ml-auto">
                 <Card>
                 <p></p> 
-                <Card.Title><center><h3>List of movies to tip</h3></center></Card.Title>
+                <Card.Title><center><h3>List of my movies</h3></center></Card.Title>
                 <div className="container-fluid">
                   <div className="row">
                     <main role="main" className="col-lg-12 d-flex justify-content-center">
