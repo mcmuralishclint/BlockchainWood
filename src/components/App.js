@@ -143,7 +143,9 @@ class App extends Component {
                 <p></p>
                 {content}
                 {movies}
+                <p/>
                 {renderAdminView()}
+                <p/>
               </div>
             </main>
           </div>
