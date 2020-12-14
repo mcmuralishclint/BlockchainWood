@@ -21,8 +21,9 @@ class DisplayTipMovie extends Component {
                           { this.props.movies.map((movie, key) => {
                             return(
 
-
+                              <div>
                             <div class="card">
+                              <img class="card-img-top" src={'https://ipfs.infura.io/ipfs/'+movie.movieHash} style={{ maxWidth: '200px'}}/>
                               <div class="card-header">
                                 <b>{movie.title}</b>
                               </div>
@@ -44,6 +45,9 @@ class DisplayTipMovie extends Component {
                                 </button>
                               </div>
                             </div>
+                            <p/>
+                            </div>
+
 
                             )
                           })}
@@ -55,6 +59,7 @@ class DisplayTipMovie extends Component {
                   </div>
                 </div>
                 </Card>
+
               </div>
             </main>
           </div>

@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form'
 class DisplayMyMovies extends Component {
   render() {
     return (
-      <div className="container-fluid mt-5">
+      <div className="container-fluid mt-5 mainCard">
           <div className="row">
             <main role="main" className="col-lg-12 d-flex text-center">
               <div className="content mr-auto ml-auto">
@@ -20,6 +20,7 @@ class DisplayMyMovies extends Component {
                         <ul id="movieList" className="list-unstyled">
                           { this.props.movies.map((movie, key) => {
                             return(
+                              <div>
                             <div class="card">
                               <img class="card-img-top" src={'https://ipfs.infura.io/ipfs/'+movie.movieHash} style={{ maxWidth: '200px'}}/>
                               <div class="card-header">
@@ -30,6 +31,8 @@ class DisplayMyMovies extends Component {
                                 <p><b>Required Amount:</b> {window.web3.utils.fromWei(movie.requiredAmount,'Ether')}</p>
                                 <p><b>Available Amount:</b> {window.web3.utils.fromWei(movie.availableAmount,'Ether')}</p>
                               </div>
+                            </div>
+                            <p/>
                             </div>
 
                             )

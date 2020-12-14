@@ -21,9 +21,10 @@ Building an Ethereum based DApp to fund movies
 - A producer can tip other movies
 - An admin can give priveleges to a producer
 - Made use of routes for seperate components
+- Images associated with each movie will be stored on the IPFS
 
 ### Features to add
-- IPFS based image associated with each movie
 - Error handling
 - Validations
 - View transaction history for each movie by user
+- UI design
