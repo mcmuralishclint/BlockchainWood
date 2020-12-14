@@ -30,6 +30,11 @@ class AddMovie extends Component {
                       <Form.Control ref={(input) => this.description = input} type="text" placeholder="Description of the movie" />
                     </Form.Group>
 
+                    <input type='file' accept=".jpg, .jpeg, .png, .bmp, .gif" onChange={this.props.captureFile} />
+                  <div className="form-group">
+                    <br></br>
+                  </div>
+
                     <Form.Group controlId="requiredAmount">
                       <Form.Control ref={(input) => this.requiredAmount = input} type="text" placeholder="Required amount for the movie" />
                     </Form.Group>

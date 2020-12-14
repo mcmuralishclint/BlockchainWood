@@ -12,6 +12,10 @@ import MovieFunder from '../abis/MovieFunder.json'
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
 import Error from './Error'
 
+//Declare IPFS
+const ipfsClient = require('ipfs-http-client')
+const ipfs = ipfsClient({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' }) // leaving out the arguments will default to these values
+
 class App extends Component {
 
   async componentWillMount() {
@@ -75,6 +79,19 @@ class App extends Component {
     this.setState({loading:false})
   }
 
+   captureFile = event => {
+
+    event.preventDefault()
+    const file = event.target.files[0]
+    const reader = new window.FileReader()
+    reader.readAsArrayBuffer(file)
+
+    reader.onloadend = () => {
+      this.setState({ buffer: Buffer(reader.result) })
+      console.log('buffer', this.state.buffer)
+    }
+  }
+
 
   constructor(props) {
     super(props)
@@ -102,12 +119,21 @@ class App extends Component {
     }
 
   createMovie(title,description,requiredAmount) {
-        this.setState({ loading: true })
-        this.state.movieFunder.methods.createMovie("imghash",title,description,requiredAmount).send({ from: this.state.account })
-        .once('receipt', (receipt) => {
+      console.log(title)
+      ipfs.add(this.state.buffer, (error, result) => {
+      console.log('Ipfs result', result)
+      if(error) {
+        console.error(error)
+        return
+      }
+
+      this.setState({ loading: true })
+      this.state.movieFunder.methods.createMovie(result[0].hash,title,description,requiredAmount).send({ from: this.state.account }).on('transactionHash', (hash) => {
         this.setState({ loading: false })
       })
+    })
     }
+ 
 
   tipMovieOwner(id, tipAmount) {
     this.setState({ loading: true })
@@ -148,7 +174,7 @@ class App extends Component {
         </div>
       </div>
       <Route exact path="/error" component={Error}/> 
-      <Route exact path="/new_movie" component={() => <AddMovie movies={this.state.movies} createMovie={this.createMovie} />} />
+      <Route exact path="/new_movie" component={() => <AddMovie captureFile={this.captureFile} movies={this.state.movies} createMovie={this.createMovie} />} />
       <Route exact path="/movies" component={() => <DisplayTipMovie movies={this.state.movies} tipMovieOwner={this.tipMovieOwner} />} />
       <Route exact path="/my_movies" component={() => <DisplayMyMovies movies={this.state.myMovies} tipMovieOwner={this.tipMovieOwner} />} />
       <Route exact path="/producer" component={() => <AdminApproval giveRightToProducer={this.giveRightToProducer} />} />
