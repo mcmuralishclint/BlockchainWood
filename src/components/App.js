@@ -7,6 +7,7 @@ import Main from './Main'
 import AddMovie from './AddMovie'
 import AdminApproval from './AdminApproval'
 import DisplayTipMovie from './DisplayTipMovie'
+import DisplayMyMovies from './DisplayMyMovies'
 import MovieFunder from '../abis/MovieFunder.json'
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
 import Error from './Error'
@@ -55,6 +56,11 @@ class App extends Component {
           movies: [...this.state.movies, movie]
         })
       }
+      if(movie.title.length>0 && movie.active && this.state.account===movie.producer){
+        this.setState({
+          myMovies: [...this.state.myMovies,movie]
+        })
+      }
       }
 
       const admin = await movieFunder.methods.admin().call()
@@ -80,6 +86,7 @@ class App extends Component {
       admin:false,
       movieCount: 0,
       movies: [],
+      myMovies:[]
     }
     this.createMovie = this.createMovie.bind(this)
     this.giveRightToProducer = this.giveRightToProducer.bind(this)
@@ -143,6 +150,7 @@ class App extends Component {
       <Route exact path="/error" component={Error}/> 
       <Route exact path="/new_movie" component={() => <AddMovie movies={this.state.movies} createMovie={this.createMovie} />} />
       <Route exact path="/movies" component={() => <DisplayTipMovie movies={this.state.movies} tipMovieOwner={this.tipMovieOwner} />} />
+      <Route exact path="/my_movies" component={() => <DisplayMyMovies movies={this.state.myMovies} tipMovieOwner={this.tipMovieOwner} />} />
       <Route exact path="/producer" component={() => <AdminApproval giveRightToProducer={this.giveRightToProducer} />} />
       <Route exact path="/" component={() => <Main ethBalance={this.state.ethBalance} />} />
       </Router>
