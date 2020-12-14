@@ -8,6 +8,8 @@ import AddMovie from './AddMovie'
 import AdminApproval from './AdminApproval'
 import DisplayMovie from './DisplayMovie'
 import MovieFunder from '../abis/MovieFunder.json'
+import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
+import Error from './Error'
 
 class App extends Component {
 
@@ -108,6 +110,7 @@ class App extends Component {
   }
 
   render() {
+
     let content,movies,adminView
     if(this.state.loading){
       content=<p id="loader" className="text-center">Loading...</p>
@@ -127,6 +130,7 @@ class App extends Component {
     }
 
     return (
+      <Router>
       <div>
         <Navbar account={this.state.account} />
         <div className="container-fluid mt-5">
@@ -148,7 +152,9 @@ class App extends Component {
             </main>
           </div>
         </div>
+        <Route path="/error" component={Error}/> 
       </div>
+      </Router>
     );
   }
 }

@@ -1,0 +1,4 @@
+#navbarSupportedContent > ul > li{
+	color: red;
+	width: 150px !important;
+}
