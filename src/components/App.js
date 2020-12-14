@@ -6,6 +6,7 @@ import Navbar from './Navbar'
 import Main from './Main'
 import AddMovie from './AddMovie'
 import AdminApproval from './AdminApproval'
+import DisplayMovie from './DisplayMovie'
 import MovieFunder from '../abis/MovieFunder.json'
 
 class App extends Component {
@@ -45,12 +46,16 @@ class App extends Component {
       
       const movieCount = await movieFunder.methods.movieCount().call()
       this.setState({ movieCount })
-      for (var i = 1; i <= movieCount; i++) {
+      for (var i = 0; i <= movieCount; i++) {
         const movie = await movieFunder.methods.movies(i).call()
+        if(movie.title.length>0 && movie.active){
         this.setState({
           movies: [...this.state.movies, movie]
         })
       }
+        console.log(movie)
+      }
+
 
       console.log(await movieFunder.methods.movieCount().call())
       const admin = await movieFunder.methods.admin().call()
@@ -121,7 +126,7 @@ class App extends Component {
             <main role="main" className="col-lg-12 d-flex text-center">
               <div className="content mr-auto ml-auto">
                 <a
-                  href="http://www.dappuniversity.com/bootcamp"
+                  href="https://www.linkedin.com/in/mcmuralishclint"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -130,7 +135,7 @@ class App extends Component {
                 <p></p>
                 {content}
                 {renderAdminView()}
-                
+                <DisplayMovie movies={this.state.movies} />
               </div>
             </main>
           </div>
