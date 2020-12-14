@@ -13,5 +13,13 @@ Building an Ethereum based DApp to fund movies
 - When the required amount is reached, the movie will be disabled for tipping
 
 ### Part 2 - Testing the smart contract using truffle
+- Individual tests for each feature mentioned in Part 1
 
 ### Part 3 - Creating a frontend using react.js
+
+### Features to add
+- Routing
+- IPFS based image associated with each movie
+- Error handling
+- Validations
+- View transaction history for each movie by user
