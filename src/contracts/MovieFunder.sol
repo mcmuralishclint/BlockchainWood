@@ -10,6 +10,7 @@ contract MovieFunder{
     
     event movieCreated(
       uint id,
+      string movieHash,
       string title,
       string description,
       uint requiredAmount,
@@ -20,6 +21,7 @@ contract MovieFunder{
      
     event movieTipped(
       uint id,
+      string movieHash,
       string title,
       string description,
       uint requiredAmount,
@@ -30,6 +32,7 @@ contract MovieFunder{
 
     struct Movie{
         uint id;
+        string movieHash;
         string title;
         string description;
         uint requiredAmount;
@@ -56,15 +59,16 @@ contract MovieFunder{
     
     
     //create a movie
-    function createMovie(string memory _title, string memory _description, uint  _requiredAmount) public{
+    function createMovie(string memory _movieHash,string memory _title, string memory _description, uint  _requiredAmount) public{
         require(msg.sender!=admin,"You are not a producer");
         require(producers[msg.sender].approved==true,"Get approval from the admin");
+        require(bytes(_movieHash).length > 0);
         require(bytes(_title).length>0,"title cant be empty");
         require(bytes(_description).length>0,"description cant be empty");
         require(msg.sender!=address(0),"producer cant be empty");
         require(_requiredAmount>0);
-        movies[movieCount] = Movie(movieCount,_title,_description,_requiredAmount,0,msg.sender,true);
-        emit movieCreated(movieCount,_title,_description,_requiredAmount,0,msg.sender,true);
+        movies[movieCount] = Movie(movieCount,_movieHash,_title,_description,_requiredAmount,0,msg.sender,true);
+        emit movieCreated(movieCount,_movieHash,_title,_description,_requiredAmount,0,msg.sender,true);
         movieCount++;
     }
     //tip a movie
@@ -82,7 +86,7 @@ contract MovieFunder{
         if (_movie.availableAmount==_movie.requiredAmount){
         _movie.active=false;}
         movies[_id] = _movie;
-        emit movieTipped(_id,_movie.title,_movie.description,_movie.requiredAmount,_movie.availableAmount,_producer,_movie.active);
+        emit movieTipped(_id,_movie.movieHash,_movie.title,_movie.description,_movie.requiredAmount,_movie.availableAmount,_producer,_movie.active);
     }
     
 }

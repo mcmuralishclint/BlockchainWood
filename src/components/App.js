@@ -103,7 +103,7 @@ class App extends Component {
 
   createMovie(title,description,requiredAmount) {
         this.setState({ loading: true })
-        this.state.movieFunder.methods.createMovie(title,description,requiredAmount).send({ from: this.state.account })
+        this.state.movieFunder.methods.createMovie("imghash",title,description,requiredAmount).send({ from: this.state.account })
         .once('receipt', (receipt) => {
         this.setState({ loading: false })
       })

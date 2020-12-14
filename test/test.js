@@ -23,7 +23,7 @@ contract('MovieFunder', ([deployer, author, tipper]) => {
 
   describe('admin',async() => {
     it('Admin rights', async() => {
-      await moviefunder.createMovie("movie","description",10).should.be.rejected;
+      await moviefunder.createMovie("abcd","movie","description",10).should.be.rejected;
       await moviefunder.tipMovieOwner(deployer).should.be.rejected;
     })
     it("Assign producer rights", async() => {
@@ -38,11 +38,12 @@ contract('MovieFunder', ([deployer, author, tipper]) => {
     it("Producer create movie successfully", async() => {
       await moviefunder.giveRightToProducer(author)
       assert.equal(await moviefunder.movieCount(),0)
-      let movie = moviefunder.createMovie("Movie","Description",web3.utils.toWei('100', 'Ether'),{ from: author })
+      let movie = moviefunder.createMovie("abcd","Movie","Description",web3.utils.toWei('100', 'Ether'),{ from: author })
       assert.equal(await moviefunder.movieCount(),1)
-      await moviefunder.createMovie('', 'description', { from: author },10).should.be.rejected;
-      await moviefunder.createMovie('Movie', '', { from: author },10).should.be.rejected;
-      await moviefunder.createMovie('Movie', '', { from: author },0).should.be.rejected;
+      await moviefunder.createMovie("abcd",'', 'description', { from: author },10).should.be.rejected;
+      await moviefunder.createMovie("abcd",'Movie', '', { from: author },10).should.be.rejected;
+      await moviefunder.createMovie("abcd",'Movie', 'fsdfomo', { from: author },0).should.be.rejected;
+      await moviefunder.createMovie("",'Movie', 'fsdfomo', { from: author },0).should.be.rejected;
     })
   })
 
@@ -50,7 +51,7 @@ contract('MovieFunder', ([deployer, author, tipper]) => {
     it("Allows users to tip movies",async() => {
 
       let required_amount = web3.utils.toWei('100', 'Ether')
-      await moviefunder.createMovie("Movie","Description",required_amount,{ from: author })
+      await moviefunder.createMovie("abcd","Movie","Description",required_amount,{ from: author })
 
       let oldAuthorBalance
       oldAuthorBalance = await web3.eth.getBalance(author)

@@ -20,8 +20,6 @@ class DisplayMyMovies extends Component {
                         <ul id="movieList" className="list-unstyled">
                           { this.props.movies.map((movie, key) => {
                             return(
-
-
                             <div class="card">
                               <div class="card-header">
                                 <b>{movie.title}</b>
