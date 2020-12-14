@@ -4,6 +4,8 @@ import './App.css';
 import Web3 from 'web3';
 import Navbar from './Navbar'
 import Main from './Main'
+import AddMovie from './AddMovie'
+import AdminApproval from './AdminApproval'
 import MovieFunder from '../abis/MovieFunder.json'
 
 class App extends Component {
@@ -40,12 +42,28 @@ class App extends Component {
     if (movieFunderData){
       const movieFunder = new web3.eth.Contract(MovieFunder.abi,movieFunderData.address)
       this.setState({movieFunder})
+      
+      const movieCount = await movieFunder.methods.movieCount().call()
+      this.setState({ movieCount })
+      for (var i = 1; i <= movieCount; i++) {
+        const movie = await movieFunder.methods.movies(i).call()
+        this.setState({
+          movies: [...this.state.movies, movie]
+        })
+      }
+
+      console.log(await movieFunder.methods.movieCount().call())
+      const admin = await movieFunder.methods.admin().call()
+      if(admin===this.state.account){
+        this.setState({admin:true})
+      }else{
+        this.setState({admin:false})
+      }
     }else{
       window.alert("Contract not deployed to the detected network")
     }
     this.setState({loading:false})
   }
-
 
   constructor(props) {
     super(props)
@@ -53,9 +71,31 @@ class App extends Component {
       account:'',
       movieFunder:{},
       ethBalance:'0',
-      loading:true
+      loading:true,
+      admin:false,
+      movieCount: 0,
+      movies: [],
     }
+    this.createMovie = this.createMovie.bind(this)
+    this.giveRightToProducer = this.giveRightToProducer.bind(this)
   }
+
+  giveRightToProducer(producer) {
+        this.setState({ loading: true })
+        this.state.movieFunder.methods.giveRightToProducer(producer).send({ from: this.state.account })
+        .once('receipt', (receipt) => {
+        this.setState({ loading: false })
+      })
+    }
+
+  createMovie(title,description,requiredAmount) {
+        console.log(title)
+        this.setState({ loading: true })
+        this.state.movieFunder.methods.createMovie(title,description,requiredAmount).send({ from: this.state.account })
+        .once('receipt', (receipt) => {
+        this.setState({ loading: false })
+      })
+    }
 
   render() {
     let content
@@ -63,6 +103,13 @@ class App extends Component {
       content=<p id="loader" className="text-center">Loading...</p>
     }else{
       content=<Main ethBalance={this.state.ethBalance}/>
+    }
+
+    let userPanel
+    if(this.state.admin){
+      userPanel = <p id="admin" className="text-center">Admin account</p>
+    }else{
+      userPanel = <p id="nonAdmin" className="text-center">Non-Admin account</p>
     }
 
     return (
@@ -81,6 +128,11 @@ class App extends Component {
                 </a>
                 <p></p>
                 {content}
+                {userPanel}
+                {this.state.admin
+                  ? <AdminApproval giveRightToProducer={this.giveRightToProducer} />
+                  : <AddMovie movies={this.state.movies} createMovie={this.createMovie} />
+                }
                 <a
                   className="App-link"
                   href="https://www.linkedin.com/in/mcmuralishclint"
