@@ -4,12 +4,11 @@ import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 
 class DisplayMovie extends Component {
-
   render() {
     return (
       <Card>
       <p></p> 
-      <Card.Title><h3>List of movies</h3></Card.Title>
+      <Card.Title><h3>List of movies to tip</h3></Card.Title>
       <div className="container-fluid">
       <div className="row">
         <main role="main" className="col-lg-12 d-flex justify-content-center">

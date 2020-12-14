@@ -48,7 +48,7 @@ class App extends Component {
       this.setState({ movieCount })
       for (var i = 0; i <= movieCount; i++) {
         const movie = await movieFunder.methods.movies(i).call()
-        if(movie.title.length>0 && movie.active){
+        if(movie.title.length>0 && movie.active && this.state.account!=movie.producer){
         this.setState({
           movies: [...this.state.movies, movie]
         })
