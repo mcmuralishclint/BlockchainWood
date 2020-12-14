@@ -14,7 +14,8 @@ class AddMovie extends Component {
       <div className="addMovie">
         <Form onSubmit={(event) => {
           event.preventDefault()
-          this.props.createMovie(this.title.value,this.description.value,this.requiredAmount.value)
+
+          this.props.createMovie(this.title.value,this.description.value,window.web3.utils.toWei(this.requiredAmount.value,'Ether'))
         }}>
           <Form.Group controlId="title">
             <Form.Control ref={(input) => this.title = input} type="text" placeholder="Title of the movie" />

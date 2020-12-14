@@ -84,6 +84,7 @@ class App extends Component {
     }
     this.createMovie = this.createMovie.bind(this)
     this.giveRightToProducer = this.giveRightToProducer.bind(this)
+    this.tipMovieOwner = this.tipMovieOwner.bind(this)
   }
 
   giveRightToProducer(producer) {
@@ -102,6 +103,13 @@ class App extends Component {
         this.setState({ loading: false })
       })
     }
+
+  tipMovieOwner(id, tipAmount) {
+    this.setState({ loading: true })
+    this.state.movieFunder.methods.tipMovieOwner(id).send({ from: this.state.account, value: tipAmount }).on('transactionHash', (hash) => {
+    this.setState({ loading: false })
+    })
+  }
 
   render() {
     let content
@@ -136,7 +144,7 @@ class App extends Component {
                 <p></p>
                 {content}
                 {renderAdminView()}
-                <DisplayMovie movies={this.state.movies} />
+                <DisplayMovie movies={this.state.movies} tipMovieOwner={this.tipMovieOwner} />
               </div>
             </main>
           </div>

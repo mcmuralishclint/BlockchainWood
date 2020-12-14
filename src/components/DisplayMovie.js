@@ -25,9 +25,20 @@ class DisplayMovie extends Component {
                   </div>
                   <div class="card-body">
                     <p><b>Description:</b> {movie.description}</p>
-                    <p><b>Required Amount:</b> {movie.requiredAmount}</p>
-                    <p><b>Available Amount:</b> {movie.availableAmount}</p>
-                    <a href="#" class="btn-sm btn-dark float-right">Tip movie</a>
+                    <p><b>Required Amount:</b> {window.web3.utils.fromWei(movie.requiredAmount,'Ether')}</p>
+                    <p><b>Available Amount:</b> {window.web3.utils.fromWei(movie.availableAmount,'Ether')}</p>
+          
+                    <button
+                      className="btn btn-link btn-sm float-right"
+                      name={movie.id}
+                      onClick={(event) => {
+                        let tipAmount = window.web3.utils.toWei('0.1','Ether')
+                        console.log(event.target.name,tipAmount)
+                        this.props.tipMovieOwner(event.target.name,tipAmount)
+                      }}
+                    >
+                    Tip 0.1 Ether
+                    </button>
                   </div>
                 </div>
 
