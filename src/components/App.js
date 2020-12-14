@@ -6,7 +6,7 @@ import Navbar from './Navbar'
 import Main from './Main'
 import AddMovie from './AddMovie'
 import AdminApproval from './AdminApproval'
-import DisplayMovie from './DisplayMovie'
+import DisplayTipMovie from './DisplayTipMovie'
 import MovieFunder from '../abis/MovieFunder.json'
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
 import Error from './Error'
@@ -142,7 +142,7 @@ class App extends Component {
       </div>
       <Route exact path="/error" component={Error}/> 
       <Route exact path="/new_movie" component={() => <AddMovie movies={this.state.movies} createMovie={this.createMovie} />} />
-      <Route exact path="/movies" component={() => <DisplayMovie movies={this.state.movies} tipMovieOwner={this.tipMovieOwner} />} />
+      <Route exact path="/movies" component={() => <DisplayTipMovie movies={this.state.movies} tipMovieOwner={this.tipMovieOwner} />} />
       <Route exact path="/producer" component={() => <AdminApproval giveRightToProducer={this.giveRightToProducer} />} />
       <Route exact path="/" component={() => <Main ethBalance={this.state.ethBalance} />} />
       </Router>

@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Form from 'react-bootstrap/Form'
 
-class DisplayMovie extends Component {
+class DisplayTipMovie extends Component {
   render() {
     return (
       <div className="container-fluid mt-5">
@@ -65,4 +65,4 @@ class DisplayMovie extends Component {
   }
 }
 
-export default DisplayMovie;
+export default DisplayTipMovie;
