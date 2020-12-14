@@ -16,9 +16,13 @@ Building an Ethereum based DApp to fund movies
 - Individual tests for each feature mentioned in Part 1
 
 ### Part 3 - Creating a frontend using react.js
+- Seperate views for producers and admin
+- A producer can create a new movie
+- A producer can tip other movies
+- An admin can give priveleges to a producer
+- Made use of routes for seperate components
 
 ### Features to add
-- Routing
 - IPFS based image associated with each movie
 - Error handling
 - Validations
