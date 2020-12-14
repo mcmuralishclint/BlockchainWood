@@ -117,22 +117,11 @@ class App extends Component {
     }else{
       content=<Main ethBalance={this.state.ethBalance}/>      
     }
-    {
-      movies=<DisplayMovie movies={this.state.movies} tipMovieOwner={this.tipMovieOwner} />
-    }
-
-    const renderAdminView = ()=>{
-      if(this.state.admin){
-        return  <AdminApproval giveRightToProducer={this.giveRightToProducer} />
-      } else{
-        return <AddMovie movies={this.state.movies} createMovie={this.createMovie} />
-      }
-    }
 
     return (
       <Router>
       <div>
-        <Navbar account={this.state.account} />
+        <Navbar account={this.state.account} admin={this.state.admin}/>
         <div className="container-fluid mt-5">
           <div className="row">
             <main role="main" className="col-lg-12 d-flex text-center">
@@ -145,15 +134,16 @@ class App extends Component {
                   <img src={logo} className="App-logo" alt="logo" />
                 </a>
                 <p></p>
-                {content}
-                {movies}
-                {renderAdminView()}
               </div>
             </main>
           </div>
         </div>
-        <Route path="/error" component={Error}/> 
       </div>
+      <Route exact path="/error" component={Error}/> 
+      <Route exact path="/new_movie" component={() => <AddMovie movies={this.state.movies} createMovie={this.createMovie} />} />
+      <Route exact path="/movies" component={() => <DisplayMovie movies={this.state.movies} tipMovieOwner={this.tipMovieOwner} />} />
+      <Route exact path="/producer" component={() => <AdminApproval giveRightToProducer={this.giveRightToProducer} />} />
+      <Route exact path="/" component={() => <Main ethBalance={this.state.ethBalance} />} />
       </Router>
     );
   }

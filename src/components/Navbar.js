@@ -2,14 +2,33 @@ import React, { Component } from 'react';
 import Identicon from 'identicon.js';
 import './Navbar.css';
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
-
+import Error from './Error'
+import AddMovie from './AddMovie'
 
 class Navbar extends Component {
   
   render() {
 
+    const isAdmin = this.props.admin;
+    let btnProducers,btnMovies,btnTipMovies,btnMyMovies;
+    if (isAdmin) {
+      console.log(isAdmin)
+      btnProducers = <li class="nav-item">
+                  <a class="nav-link" href="/producer">Producers</a>
+                </li>
+    } else {
+      btnMovies = <li class="nav-item">
+                    <a class="nav-link" href="/new_movie">New Movie</a>
+                  </li>
+      btnTipMovies = <li class="nav-item">
+                        <a class="nav-link" href="/movies">Tip Movies</a>
+                     </li>
+      btnMyMovies = <li class="nav-item">
+                      <a class="nav-link" href="/my_movies">My Movies</a>
+                    </li>
+    }
+
     return (
-      
         <div>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <a
@@ -25,15 +44,14 @@ class Navbar extends Component {
             <li class="nav-item">
               <a class="nav-link" href="/">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/new_movie">New Movie</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/my_movies">My Movies</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/error">Error</a>
-            </li>
+            
+            {btnMovies}
+            {btnProducers}
+            {btnTipMovies}
+            {btnMyMovies}
+            
+
+            
             </ul>
           </div>
           <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
