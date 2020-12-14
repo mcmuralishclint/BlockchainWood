@@ -112,11 +112,14 @@ class App extends Component {
   }
 
   render() {
-    let content
+    let content,movies,adminView
     if(this.state.loading){
       content=<p id="loader" className="text-center">Loading...</p>
     }else{
-      content=<Main ethBalance={this.state.ethBalance}/>
+      content=<Main ethBalance={this.state.ethBalance}/>      
+    }
+    {
+      movies=<DisplayMovie movies={this.state.movies} tipMovieOwner={this.tipMovieOwner} />
     }
 
     const renderAdminView = ()=>{
@@ -143,8 +146,8 @@ class App extends Component {
                 </a>
                 <p></p>
                 {content}
+                {movies}
                 {renderAdminView()}
-                <DisplayMovie movies={this.state.movies} tipMovieOwner={this.tipMovieOwner} />
               </div>
             </main>
           </div>
