@@ -105,11 +105,12 @@ class App extends Component {
       content=<Main ethBalance={this.state.ethBalance}/>
     }
 
-    let userPanel
-    if(this.state.admin){
-      userPanel = <p id="admin" className="text-center">Admin account</p>
-    }else{
-      userPanel = <p id="nonAdmin" className="text-center">Non-Admin account</p>
+    const renderAdminView = ()=>{
+      if(this.state.admin){
+        return  <AdminApproval giveRightToProducer={this.giveRightToProducer} />
+      } else{
+        return <AddMovie movies={this.state.movies} createMovie={this.createMovie} />
+      }
     }
 
     return (
@@ -128,19 +129,7 @@ class App extends Component {
                 </a>
                 <p></p>
                 {content}
-                {userPanel}
-                {this.state.admin
-                  ? <AdminApproval giveRightToProducer={this.giveRightToProducer} />
-                  : <AddMovie movies={this.state.movies} createMovie={this.createMovie} />
-                }
-                <a
-                  className="App-link"
-                  href="https://www.linkedin.com/in/mcmuralishclint"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Subscribe to our service
-                </a>
+                {renderAdminView()}
                 
               </div>
             </main>
