@@ -8,7 +8,7 @@ class AddMovie extends Component {
   render() {
     return (
       <div>
-      <div className="container-fluid mt-5">
+      <div className="container-fluid mt-5 add-movie">
           <div className="row">
             <main role="main" className="col-lg-12  text-center">
               <div className="content mr-auto ml-auto">
