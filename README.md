@@ -28,3 +28,10 @@ Building an Ethereum based DApp to fund movies
 - Validations
 - View transaction history for each movie by user
 - UI design
+
+## Setup information
+- Clone the project
+- cd into the folder
+- npm install 
+- truffle test
+- npm run start
