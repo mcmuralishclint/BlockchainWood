@@ -1,6 +1,9 @@
 # Movie-BFund
 A Blockchain based crowdfunding platform to fund movies
 
+*Contract deployed on the Kovan test network*
+https://kovan.etherscan.io/address/0x07151981dbc3215dde0124a656b898bfef4a3925
+
 ## Overview
 Building an Ethereum based DApp to fund movies
 
