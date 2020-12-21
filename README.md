@@ -38,3 +38,7 @@ Building an Ethereum based DApp to fund movies
 - npm install 
 - truffle test
 - npm run start
+
+## Fund the project
+
+Trx: TYr6BtVSN6QyjPKQ5cGWvk4C9HasAWmhHw
